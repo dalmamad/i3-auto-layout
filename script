@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# it doest work if resize happens !!
+i3_win_size=$(xdotool getwindowfocus getwindowgeometry | grep Geometry | cut -c13-)
+i3_win_width=$(echo $i3_win_size | cut -d x -f 1)
+i3_win_height=$(echo $i3_win_size | cut -d x -f 2)
+
+if [[ $i3_win_width -ge $i3_win_height  ]]; then
+  i3-msg split h
+else
+  i3-msg split v
+fi
