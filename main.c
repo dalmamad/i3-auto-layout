@@ -12,11 +12,22 @@ void run_auto_layout(char script_path[]) {
   system(command);
 }
 
+int errorHandler(Display *display, XErrorEvent *event) {
+  if (event->error_code == BadWindow) {
+    printf("X11 error: bad window (invalid window parameter)\n");
+    return 0; // Return 0 to indicate that the error has been handled
+  }
+  return 1; // Return 1 to indicate that the error has not been handled
+}
+
 int main() {
   Display *display;
   Window root;
   XEvent event;
   XWindowAttributes attr;
+
+  // Set up the X11 error handler
+  XSetErrorHandler(errorHandler);
 
   char path[1000];
   char *script_path;
