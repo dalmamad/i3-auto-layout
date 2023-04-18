@@ -1,12 +1,14 @@
 #include <X11/Xlib.h>
+#include <libgen.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-void run_auto_layout() {
-  char script[] = "script";
+void run_auto_layout(char script_path[]) {
+
   char command[100];
-  sprintf(command, "bash %s", script);
+  sprintf(command, "bash %s", script_path);
   system(command);
 }
 
@@ -15,6 +17,13 @@ int main() {
   Window root;
   XEvent event;
   XWindowAttributes attr;
+
+  char path[1000];
+  char *script_path;
+  if (readlink("/proc/self/exe", path, sizeof(path)) != -1) {
+    script_path = dirname(path);
+    strcat(script_path, "/script");
+  }
 
   display = XOpenDisplay(NULL);
   if (display == NULL) {
@@ -32,7 +41,7 @@ int main() {
     if (event.type == CreateNotify) {
       XGetWindowAttributes(display, event.xcreatewindow.window, &attr);
       if (attr.override_redirect == False) {
-        run_auto_layout();
+        run_auto_layout(script_path);
       }
     }
   }
