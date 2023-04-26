@@ -6,7 +6,7 @@
 
 ## Why
 
-there are some other auto layout for i3. but some of them loos functionality when you move a window. this one will split window base on window size. if widnow is wide it will split vartically otherwise split horizontally.
+there are some other auto layout for i3. but some of them loose functionality when you move a window. this one will split window base on window size. if widnow is wide it will split vartically otherwise split horizontally.
 
 ## Usage
 
